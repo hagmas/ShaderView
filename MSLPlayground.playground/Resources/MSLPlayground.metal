@@ -13,6 +13,7 @@ float2 mod(float2 x, float y) {
     return float2(x.x - y * floor(x.x/y), x.y - y * floor(x.y/y));
 }
 
+// Converted from https://www.shadertoy.com/view/XsXXDn
 kernel void playgroundSample(texture2d<float, access::write> o[[texture(0)]],
                              constant float &time [[buffer(0)]],
                              constant float2 *touchEvent [[buffer(1)]],
