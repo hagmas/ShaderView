@@ -11,3 +11,37 @@ ShaderView is designed to extend `MTKView` which enables to do shader view progr
 ## Usage
 ShaderView is consisted mainly from `ShaderViewRenderer` and `MTKView`'s extension. 
 
+```swift
+import MetalKit
+import ShaderView
+
+// Create MTLDevice. MTLDevice is encouranged to create right after the app launch and retain throughout the life time of the app.
+guard let device = MTLCreateSystemDefaultDevice else {
+    return
+}
+
+// Optional: Create MTLLibrary. This is optional and if you don't set your own MTLLibrary, ShaderViewRenderer will generate a default library from the device.
+var library: MTLLibrary?
+do {
+    let path = Bundle.main.path(forResource: "MSLPlayground", ofType: "metal")
+    let source = try String(contentsOfFile: path!, encoding: .utf8)
+    library = try device.makeLibrary(source: source, options: nil)
+} catch let error as NSError {
+    print("library error: " + error.description)
+}
+
+// Create MTLView
+let shaderView = MTKView(frame: NSRect(x: 0, y: 0, width: 400, height: 400), device: device)
+
+// Create ShaderViewRenderer with the device you created.
+let renderer = ShaderViewRenderer(device: device)
+
+// Optional: Set MTLLibrary to ShaderViewRenderer
+renderer.library = library
+
+// Set the kernel function name to ShaderViewRenderer. The function you specified must have the same arguments as "MSLPlayground.metal" in the example Playground.
+renderer.functionName = "playgroundSample"
+
+// Set the renderer to the metal view.
+shaderView.sv.set(renderer: renderer)
+```
