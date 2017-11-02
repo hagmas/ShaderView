@@ -1,4 +1,10 @@
-//: Playground - noun: a place where people can play
+/*:
+ # How to use this playground
+ * Build the target "ShaderView" against "My Mac" as below. Please note that it doesn't work on iOS Simulator becase of the limitation of Metal.
+ ![Target](target.png)
+ * Progam your own shader function in `playgroundSample` in MSLPlayground.metal. You can also add your own metal file or metal function. In that case, change the name of the resource file to load the `MTLLibrary` or `funcationName` to set on the `ShaderViewRenderer`.
+ */
+
 
 import Foundation
 import AppKit
